@@ -60,7 +60,14 @@ class Console_Logs:
         self.driver.find_element(locator_strategy, locator_value).send_keys(Keys.PAGE_DOWN)
 
     def fetch_console_logs(self):
-        return self.driver.get_log("browser")
+        if not hasattr(self.driver, 'get_log'):
+            raise AttributeError("The WebDriver instance does not support 'get_log'.")
+
+        try:
+            logs = self.driver.get_log("browser")
+            return logs
+        except Exception as e:
+            raise RuntimeError(f"Failed to fetch browser logs: {str(e)}")
 
     def close_browser(self):
         self.driver.quit()
