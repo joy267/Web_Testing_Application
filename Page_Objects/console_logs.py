@@ -71,3 +71,5 @@ class Console_Logs:
 
     def close_browser(self):
         self.driver.quit()
+
+
