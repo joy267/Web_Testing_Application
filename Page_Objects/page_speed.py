@@ -42,7 +42,7 @@ class Page_Speed:
                                                                      "1]/div[2]")
         self.locator_of_desktop_speed_index = (By.XPATH, "//div[@id='speed-index']/div[1]/div[2]")
         self.data_list = []
-        self.Selenium_Grid_URL = ("https://josh_hnveYE:V1axf7smmuAky3spdYNh@hub-cloud.browserstack.com/wd""/hub")
+        self.Selenium_Grid_URL = ("https://mamal_AROq6B:u1xogwyxP69m2VCwQjgo@hub-cloud.browserstack.com/wd""/hub")
 
     def open_webdriver(self):
         options = Options()

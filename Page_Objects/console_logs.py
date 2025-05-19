@@ -31,7 +31,7 @@ class Console_Logs:
         self.webdriver_path = "C:\\Projects\\Python_Selenium\\Webdrivers\\chromedriver.exe"
 
         self.website_body = (By.TAG_NAME, "body")
-        self.Selenium_Grid_URL = ("https://josh_hnveYE:V1axf7smmuAky3spdYNh@hub-cloud.browserstack.com/wd"
+        self.Selenium_Grid_URL = ("https://mamal_AROq6B:u1xogwyxP69m2VCwQjgo@hub-cloud.browserstack.com/wd"
                                   "/hub")
 
     def create_excel_sheet(sheet_name):
