@@ -9,11 +9,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def configure_chrome_options_for_logging():
-    caps = DesiredCapabilities.CHROME
-    caps['goog:loggingPrefs'] = {'browser': 'ALL'}
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # If running headless
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
 
 def save_excel_sheet(sheet_name):
