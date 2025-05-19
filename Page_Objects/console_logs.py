@@ -59,15 +59,32 @@ class Console_Logs:
         time.sleep(1)
         self.driver.find_element(locator_strategy, locator_value).send_keys(Keys.PAGE_DOWN)
 
+    # def fetch_console_logs(self):
+    #     if not hasattr(self.driver, 'get_log'):
+    #         raise AttributeError("The WebDriver instance does not support 'get_log'.")
+    #
+    #     try:
+    #         logs = self.driver.get_log("browser")
+    #         return logs
+    #     except Exception as e:
+    #         raise RuntimeError(f"Failed to fetch browser logs: {str(e)}")
+
     def fetch_console_logs(self):
+        # Check if the driver has the get_log method
         if not hasattr(self.driver, 'get_log'):
-            raise AttributeError("The WebDriver instance does not support 'get_log'.")
+            return "Logging is not supported on this WebDriver instance."
 
         try:
-            logs = self.driver.get_log("browser")
+            # Attempt to fetch the logs
+            logs = self.driver.get_log('browser')
             return logs
         except Exception as e:
-            raise RuntimeError(f"Failed to fetch browser logs: {str(e)}")
+            # If logging is not supported, provide clear feedback
+            if "not supported" in str(e).lower():
+                return "Console logging is not supported in the current environment."
+            else:
+                # Other errors
+                raise RuntimeError(f"Error while fetching console logs: {str(e)}")
 
     def close_browser(self):
         self.driver.quit()
