@@ -5,6 +5,7 @@ import pandas as pd
 import Page_Objects.console_logs
 from Page_Objects.console_logs import Console_Logs
 import streamlit as st
+import json
 
 
 def console_log():
@@ -61,13 +62,24 @@ def console_log():
             logs = console_logs.fetch_console_logs()
 
             level = []
+            # for entry in logs:
+            #     level.append({
+            #         'level': entry['level'],
+            #         'message': entry['message'],
+            #         'source': entry['source'],
+            #         'timestamp': entry['timestamp']
+            #     })
+            # Assuming logs is either a list of dicts, or list of JSON strings
             for entry in logs:
+                if isinstance(entry, str):
+                    entry = json.loads(entry)
                 level.append({
                     'level': entry['level'],
                     'message': entry['message'],
                     'source': entry['source'],
                     'timestamp': entry['timestamp']
                 })
+
             try:
                 status.update(state="complete")
                 status.update(label="Excel file has been generated!", state="complete", expanded=False)
