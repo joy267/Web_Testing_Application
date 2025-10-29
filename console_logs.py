@@ -1,20 +1,18 @@
 import time
 import random
-
-import pandas as pd
-import Page_Objects.console_logs
-from Page_Objects.console_logs import Console_Logs
 import streamlit as st
-import json
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 
-def console_log():
+def console_logs():
     st.title("Website Console Logs")
 
     st.markdown("--------------------------------")
 
-    if "authenticated" not in st.session_state:
-        st.session_state.authenticated = False
+    # if "authenticated" not in st.session_state:
+    #     st.session_state.authenticated = False
 
     with st.form("my_form", clear_on_submit=True):
         test_url = st.text_input("**Enter Your Test URL** :", "", placeholder="Please enter your test URL")
@@ -35,63 +33,37 @@ def console_log():
 
             time.sleep(1)
 
-            console_logs = Console_Logs()
+        options = Options()
+        options.add_argument('--headless')
+        options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
-            Page_Objects.console_logs.configure_chrome_options_for_logging()
+        # --- Launch Browser ---
+        service = Service(
+            "C:\\Projects\\Web_Testing_Application\\Webdrivers\\chromedriver.exe")  # or full path if needed
+        driver = webdriver.Chrome(service=service, options=options)
 
-            console_logs.open_webdriver()
+        driver.get(keyword)
+        driver.maximize_window()
+        time.sleep(2)
 
-            time.sleep(1)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(2)
 
-            console_logs.implicit_wait(10)
+        # --- Fetch Console Logs ---
+        logs = driver.get_log("browser")
 
-            time.sleep(1)
+        st.subheader("Console Logs:")
+        for entry in logs:
+            level = entry["level"]
+            message = entry["message"]
+            if level == "SEVERE":
+                st.error(f"[{level}] {message}")
+            elif level == "WARNING":
+                st.warning(f"[{level}] {message}")
+            elif level == "INFO":
+                st.info(f"[{level}] {message}")
 
-            console_logs.open_website(keyword)
-
-            time.sleep(1)
-
-            console_logs.scroll_website()
-
-            time.sleep(2)
-
-            st.write("Downloading console logs...")
-
-            time.sleep(1)
-
-            logs = console_logs.fetch_console_logs()
-
-            level = []
-            # for entry in logs:
-            #     level.append({
-            #         'level': entry['level'],
-            #         'message': entry['message'],
-            #         'source': entry['source'],
-            #         'timestamp': entry['timestamp']
-            #     })
-            # Assuming logs is either a list of dicts, or list of JSON strings
-            for entry in logs:
-                if isinstance(entry, str):
-                    entry = json.loads(entry)
-                level.append({
-                    'level': entry['level'],
-                    'message': entry['message'],
-                    'source': entry['source'],
-                    'timestamp': entry['timestamp']
-                })
-
-            try:
-                status.update(state="complete")
-                status.update(label="Excel file has been generated!", state="complete", expanded=False)
-
-            except status.update(state="error"):
-                st.button("Rerun")
-
-            time.sleep(1)
-
-        df = pd.DataFrame(level)
-
-        st.dataframe(df)
+        driver.quit()
 
     st.markdown("---")
     st.markdown("<center><small>Created by <b>Mrityunjoy Mandal</b> © 2025</small></center>", unsafe_allow_html=True)

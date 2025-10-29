@@ -6,11 +6,6 @@ import firebase_admin
 from streamlit_option_menu import option_menu
 from validate_email_address import validate_email
 
-from console_logs import console_log
-from page_speed_check import page_performance
-from practice_automation_code import main_app
-from sign_up import sign_up
-
 
 def login():
     # 🔹 Initialize Firebase App (Ensure it's only initialized once)
