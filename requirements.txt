@@ -2,10 +2,9 @@ firebase_admin
 Pyrebase4
 streamlit_option_menu
 validate_email_address
-#chromedrivermanager
-streamlit
-#webdriver-manager
-#pywin32
-selenium
-openpyxl
+streamlit~=1.41.1
+selenium~=4.23.1
+openpyxl~=3.1.5
 setuptools
+login~=0.0.6
+pandas~=2.2.3
