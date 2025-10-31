@@ -7,6 +7,8 @@ from selenium.webdriver.chrome.options import Options
 
 
 def console_logs():
+    # st.set_page_config(page_title="Console Logs", layout="wide")
+
     st.title("Website Console Logs")
 
     st.markdown("--------------------------------")

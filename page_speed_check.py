@@ -11,6 +11,8 @@ import streamlit as st
 def page_performance():
     page_speed = Page_Speed()
 
+    # st.set_page_config(page_title="Page Speed Performance", layout="wide")
+
     st.title("Website Page Speed Performance")
 
     st.markdown("--------------------------------")
